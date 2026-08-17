@@ -2,7 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useMode } from "./mode-context";
 
-const primary = [
+type NavItem = { label: string; to: string; hash?: string };
+
+const primary: NavItem[] = [
   { label: "Śiva", to: "/", hash: "what-is-shiva" },
   { label: "Forms", to: "/atlas" },
   { label: "Philosophy", to: "/", hash: "pratyabhijna" },
@@ -12,9 +14,9 @@ const primary = [
   { label: "Temples", to: "/geography" },
   { label: "Traditions", to: "/", hash: "siddhanta" },
   { label: "Cosmos", to: "/tattvas" },
-] as const;
+];
 
-const mandalaNodes = [
+const mandalaNodes: NavItem[] = [
   { label: "Forms", to: "/atlas" },
   { label: "Kailāsa", to: "/", hash: "kailasa" },
   { label: "Naṭarāja", to: "/", hash: "nataraja" },
@@ -27,7 +29,7 @@ const mandalaNodes = [
   { label: "Texts", to: "/texts" },
   { label: "Temples", to: "/geography" },
   { label: "Tattvas", to: "/tattvas" },
-] as const;
+];
 
 export function SiteNav() {
   const { scholar, setScholar, meditation, setMeditation } = useMode();
@@ -46,7 +48,7 @@ export function SiteNav() {
     return <MeditationOverlay onExit={() => setMeditation(false)} />;
   }
 
-  const linkTo = (n: { to: string; hash?: string }) =>
+  const linkTo = (n: NavItem): Record<string, unknown> =>
     n.hash ? { to: n.to, hash: n.hash } : { to: n.to };
 
   return (
@@ -63,7 +65,7 @@ export function SiteNav() {
             {primary.map((n) => (
               <li key={n.label}>
                 <Link
-                  {...(linkTo(n) as never)}
+                  {...(linkTo(n) as any)}
                   className="text-[11px] uppercase tracking-[0.24em] text-ash transition-colors hover:text-moonlight"
                 >
                   {n.label}
@@ -117,7 +119,7 @@ export function SiteNav() {
             {primary.map((n) => (
               <li key={n.label}>
                 <Link
-                  {...(linkTo(n) as never)}
+                  {...(linkTo(n) as any)}
                   onClick={() => setDrawer(false)}
                   className="block py-3 font-display text-2xl text-moonlight/90"
                 >
@@ -170,7 +172,7 @@ function Mandala({ onClose }: { onClose: () => void }) {
           return (
             <Link
               key={n.label}
-              {...({ to: n.to, ...(n.hash ? { hash: n.hash } : {}) } as never)}
+              {...(linkTo(n) as any)}
               onClick={onClose}
               className="absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-border/70 bg-card/70 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-ash transition-all hover:border-gold/70 hover:text-gold"
               style={{ left: `${50 + Math.cos(angle) * R}%`, top: `${50 + Math.sin(angle) * R}%` }}
