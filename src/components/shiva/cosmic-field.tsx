@@ -168,10 +168,27 @@ export function CosmicField({
     };
     document.addEventListener("visibilitychange", onVisibility);
 
+    // Only animate while the canvas is on screen: dozens of scenes share one page.
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const visible = entry?.isIntersecting ?? true;
+        if (!visible) {
+          running = false;
+          cancelAnimationFrame(raf);
+        } else if (!running) {
+          running = true;
+          draw();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    io.observe(canvas);
+
     return () => {
       running = false;
       cancelAnimationFrame(raf);
       ro.disconnect();
+      io.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [variant, intensity, radial]);
