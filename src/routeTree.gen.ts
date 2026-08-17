@@ -10,33 +10,73 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AtlasRouteImport } from './routes/atlas'
+import { Route as GeographyRouteImport } from './routes/geography'
+import { Route as TattvasRouteImport } from './routes/tattvas'
+import { Route as TextsRouteImport } from './routes/texts'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AtlasRoute = AtlasRouteImport.update({
+  id: '/atlas',
+  path: '/atlas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GeographyRoute = GeographyRouteImport.update({
+  id: '/geography',
+  path: '/geography',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TattvasRoute = TattvasRouteImport.update({
+  id: '/tattvas',
+  path: '/tattvas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TextsRoute = TextsRouteImport.update({
+  id: '/texts',
+  path: '/texts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/atlas': typeof AtlasRoute
+  '/geography': typeof GeographyRoute
+  '/tattvas': typeof TattvasRoute
+  '/texts': typeof TextsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/atlas': typeof AtlasRoute
+  '/geography': typeof GeographyRoute
+  '/tattvas': typeof TattvasRoute
+  '/texts': typeof TextsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/atlas': typeof AtlasRoute
+  '/geography': typeof GeographyRoute
+  '/tattvas': typeof TattvasRoute
+  '/texts': typeof TextsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/atlas' | '/geography' | '/tattvas' | '/texts'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/atlas' | '/geography' | '/tattvas' | '/texts'
+  id: '__root__' | '/' | '/atlas' | '/geography' | '/tattvas' | '/texts'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AtlasRoute: typeof AtlasRoute
+  GeographyRoute: typeof GeographyRoute
+  TattvasRoute: typeof TattvasRoute
+  TextsRoute: typeof TextsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +88,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/atlas': {
+      id: '/atlas'
+      path: '/atlas'
+      fullPath: '/atlas'
+      preLoaderRoute: typeof AtlasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/geography': {
+      id: '/geography'
+      path: '/geography'
+      fullPath: '/geography'
+      preLoaderRoute: typeof GeographyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tattvas': {
+      id: '/tattvas'
+      path: '/tattvas'
+      fullPath: '/tattvas'
+      preLoaderRoute: typeof TattvasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/texts': {
+      id: '/texts'
+      path: '/texts'
+      fullPath: '/texts'
+      preLoaderRoute: typeof TextsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AtlasRoute: AtlasRoute,
+  GeographyRoute: GeographyRoute,
+  TattvasRoute: TattvasRoute,
+  TextsRoute: TextsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
