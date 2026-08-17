@@ -31,6 +31,9 @@ const mandalaNodes: NavItem[] = [
   { label: "Tattvas", to: "/tattvas" },
 ];
 
+const linkTo = (n: NavItem): Record<string, unknown> =>
+  n.hash ? { to: n.to, hash: n.hash } : { to: n.to };
+
 export function SiteNav() {
   const { scholar, setScholar, meditation, setMeditation } = useMode();
   const [mandala, setMandala] = useState(false);
@@ -48,8 +51,6 @@ export function SiteNav() {
     return <MeditationOverlay onExit={() => setMeditation(false)} />;
   }
 
-  const linkTo = (n: NavItem): Record<string, unknown> =>
-    n.hash ? { to: n.to, hash: n.hash } : { to: n.to };
 
   return (
     <>
