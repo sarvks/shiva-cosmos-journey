@@ -239,7 +239,9 @@ export function TamilShaivism() {
               <p className="font-display text-xl text-moonlight">{k}</p>
               <p className="mt-2 text-sm text-foreground/80">{v}</p>
             </div>
-          ))}
+          </Reveal>
+        ))}
+
       </div>
     </Scene>
   );
