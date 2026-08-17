@@ -70,7 +70,7 @@ export function Scene({
         className="absolute inset-0 -z-10"
         style={{ background: tint ?? "radial-gradient(120% 90% at 50% 20%, oklch(0.2 0.04 262), oklch(0.11 0.014 264) 70%)" }}
       />
-      <CosmicField variant={variant} radial={radial} intensity={(intensity ?? 1) * (meditation ? 0.5 : 1)} />
+      <CosmicField variant={variant} radial={radial ?? false} intensity={(intensity ?? 1) * (meditation ? 0.5 : 1)} />
       <div className="relative mx-auto w-full max-w-5xl">{children}</div>
     </section>
   );
