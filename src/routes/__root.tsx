@@ -11,6 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { ModeProvider } from "@/components/shiva/mode-context";
+import { SiteNav } from "@/components/shiva/nav";
 
 function NotFoundComponent() {
   return (
@@ -77,19 +79,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "ŚIVA — Consciousness, Transformation and Liberation" },
+      {
+        name: "description",
+        content:
+          "An immersive, scholarly journey through Śaivism: forms of Śiva, philosophy, Tantra, temples and sacred geography.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Karla:wght@300;400;500&family=Noto+Serif+Devanagari:wght@400;500&family=Noto+Serif+Tamil:wght@400&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
@@ -114,13 +119,37 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function SiteFooter() {
+  return (
+    <footer className="relative z-10 border-t border-border/60 bg-background px-6 py-12 md:px-12">
+      <div className="mx-auto max-w-5xl space-y-4">
+        <p className="deva text-xl text-moonlight/80">शिव</p>
+        <p className="max-w-2xl text-xs leading-relaxed text-ash">
+          An educational project. Throughout, scripture, mythology, philosophy, devotional theology, Tantric tradition,
+          temple practice, historical scholarship, archaeology and modern interpretation are distinguished rather than
+          merged. Where Śaiva traditions disagree, the disagreement is shown.
+        </p>
+        <p className="text-xs text-ash/70">
+          Sanskrit is given in Devanāgarī with IAST transliteration. Dates are approximate ranges where the evidence is
+          uncertain.
+        </p>
+      </div>
+    </footer>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <ModeProvider>
+        <SiteNav />
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+        <SiteFooter />
+      </ModeProvider>
     </QueryClientProvider>
   );
 }
+
